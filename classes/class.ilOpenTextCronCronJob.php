@@ -87,7 +87,23 @@ class ilOpenTextCronCronJob extends ilCronJob
 	public function run()
 	{
 		$result = new ilCronJobResult();
-		$result->setStatus(ilCronJobResult::STATUS_OK);
+
+		$plugins = ilPluginAdmin::getActivePluginsForSlot("Services", "EventHandling", "evhk");
+		foreach ($plugins as $pl)
+		{
+			$plugin = ilPluginAdmin::getPluginObject(
+				'Services',
+				'EventHandling',
+				'evhk',
+				$pl
+			);
+
+			if($plugin->getPluginName() == 'OpenText')
+			{
+				$plugin->runCronJob($result);
+			}
+
+		}
 		return $result;
 	}
 
