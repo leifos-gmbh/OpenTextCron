@@ -104,6 +104,9 @@ class ilOpenTextCronCronJob extends ilCronJob
 			}
 
 		}
+
+		\ilLoggerFactory::getLogger('otxt')->info('Cron job result is: ' . $result->getCode());
+
 		return $result;
 	}
 
